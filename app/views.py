@@ -10,7 +10,10 @@ from app import app
 from flask import render_template, request, redirect, url_for
 from app import db
 from app.models import User
+from .forms import EmailPasswordForm
 
+
+app.secret_key = 'my superrr dupper secret_key'
 
 ###
 # Routing for your application.
@@ -25,6 +28,11 @@ def home():
 def person():
     first_user = db.session.query(User).first()
     return "username: {}, email: {}".format(first_user.username, first_user.email)
+  
+@app.route('/theform', methods=["GET", "POST"])
+def theform():
+    form = EmailPasswordForm()
+    return render_template('theform.html', form=form)
 
 @app.route('/about/')
 def about():
